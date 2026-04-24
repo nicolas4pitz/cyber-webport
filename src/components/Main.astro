@@ -9,15 +9,10 @@ import NotesCards from "./NotesCards.astro";
 const notes = await getCollection("notes")
 ---
 
-<div class="noise" aria-hidden="true"></div>
 
 <div id="boot-overlay" class="hidden" aria-hidden="true">
   <pre id="boot-text"></pre>
 </div>
-
-<canvas id="matrix-rain" aria-hidden="true"></canvas>
-
-<div id="status-bar" class="status-bar">Loading status...</div>
 
 <main class="wrap">
   <header id="hud-nav" class="hud-nav">
@@ -202,7 +197,7 @@ const notes = await getCollection("notes")
     width: 195px;
   }
 
-  .side-image{
+  .side-image {
     width: 140px;
     height: auto;
     position: absolute;
@@ -211,7 +206,7 @@ const notes = await getCollection("notes")
     top: 210px;
   }
 
-  .image-text{
+  .image-text {
     width: 100px;
     margin-top: 0px;
     margin-bottom: 10px;
@@ -227,25 +222,6 @@ const notes = await getCollection("notes")
     margin-top: 4px;
     text-shadow: none;
     white-space: nowrap;
-  }
-
-  .status-bar {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 860px;
-    z-index: 101;
-    padding: 3px 0;
-    background: var(--pink);
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: 0.1em;
-    text-shadow: 1.5px 1.5px 0 #291e22;
   }
 
   #boot-overlay {
@@ -315,6 +291,10 @@ const notes = await getCollection("notes")
 
   .intro-note {
     text-align: right;
+  }
+
+  .audio-panel {
+    margin: 8px 0;
   }
 
   .audio-bar {
@@ -466,36 +446,6 @@ const notes = await getCollection("notes")
   @keyframes wave {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
-  }
-
-  .noise {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    right: -50%;
-    bottom: -50%;
-    width: 200%;
-    height: 200vh;
-    background: transparent url('/src/assets/noise.png') repeat 0 0;
-    background-repeat: repeat;
-    animation: bg-animation 0.2s infinite;
-    visibility: visible;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  @keyframes bg-animation {
-    0% { transform: translate(0,0) }
-    10% { transform: translate(-5%,-5%) }
-    20% { transform: translate(-10%,5%) }
-    30% { transform: translate(5%,-10%) }
-    40% { transform: translate(-5%,15%) }
-    50% { transform: translate(-10%,5%) }
-    60% { transform: translate(15%,0) }
-    70% { transform: translate(0,10%) }
-    80% { transform: translate(-15%,0) }
-    90% { transform: translate(10%,5%) }
-    100% { transform: translate(5%,0) }
   }
 
   @media (max-width: 600px) {
