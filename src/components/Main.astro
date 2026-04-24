@@ -1,0 +1,528 @@
+---
+const waveText = 'The Wired is just a medium of communication and the transfer of information';
+const waveCharacters: string[] = Array.from(waveText);
+
+
+import { getCollection } from "astro:content";
+import NotesCards from "./NotesCards.astro";
+
+const notes = await getCollection("notes")
+---
+
+<div class="noise" aria-hidden="true"></div>
+
+<div id="boot-overlay" class="hidden" aria-hidden="true">
+  <pre id="boot-text"></pre>
+</div>
+
+<canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+<div id="status-bar" class="status-bar">Loading status...</div>
+
+<main class="wrap">
+  <header id="hud-nav" class="hud-nav">
+    <div class="hud-nav-left">
+      <a href="/" class="hud-link">HOME</a>
+      <a href="/about" class="hud-link">ABOUT</a>
+    </div>
+    <hr class="divider" />
+  </header>
+
+  <section class="page_header">
+    <img src="/src/assets/gengarsemtraco.gif" class="header_gif" alt="">
+    <div class="page_header-copy">
+      
+      <h1>
+        N 1 C k x Z
+        <span>Offensive Security • Pentest • CTF</span>
+      </h1>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="wired-call">
+    <a href="https://nicolas4pitz.atabook.org/" id="wired-link" rel="noopener noreferrer" target="_blank">
+      Leave a message on my board
+    </a>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="content-block intro-block fade-item" style="animation-delay:0.05s">
+    <p class="intro-quote">"<i><b>no matter where you go everyone's connected</b></i>"</p>
+    <p class="intro-note">I learn by doing: <i><b>labs, CTFs, and write-ups</b></i></p>
+  </section>
+
+  <img class="side-image" src="/src/assets/gengarpisao.gif" alt="">
+
+  <section class="audio-panel fade-item" style="animation-delay:0.12s">
+    <div class="audio-bar">
+      <span>ambient signal</span>
+      <span class="audio-toggle-inline">ready</span>
+    </div>
+    <audio id="ambient-audio" loop preload="none"></audio>
+    <canvas id="audio-viz" width="820" height="40" aria-hidden="true"></canvas>
+  </section>
+
+  <section class="wave-panel">
+    <img src="/src/assets/gastlyy.gif" alt="" class="image-text">
+    <p class="wave-text" id="wt" aria-label={waveText}>
+      {waveCharacters.map((character: string, index: number) => (
+        <span style={`animation-delay:${index * 0.05}s`}>
+          {character === ' ' ? '\u00A0' : character}
+        </span>
+      ))}
+    </p>
+  </section>
+
+  <section class="section-shell fade-item" style="animation-delay:0.22s">
+    <div class="section_header">Field Notes</div>
+    <div class="content-block">
+      <div id="devlog-container">
+        <NotesCards notes={notes}/>
+      </div>
+    </div>
+    <div id="timeline-heatmap" class="timeline-heatmap"></div>
+  </section>
+
+  <section class="section-shell fade-item" style="animation-delay:0.32s">
+    <div class="section_header">Projects</div>
+    <div class="content-block">
+      <div id="project-container"></div>
+      <div class="view-all-row">
+        <a href="/src/projects/projects_index.html">View All Projects -></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-shell fade-item" style="animation-delay:0.37s">
+    <div class="section_header">CTF Results</div>
+    <div class="content-block">
+      <div id="ctf-score-strip" class="score-strip"></div>
+      <div id="ctf-container"></div>
+    </div>
+  </section>
+
+  <section class="section-shell fade-item" style="animation-delay:0.42s">
+    <div class="section_header">Reports & Write-Ups</div>
+    <div class="content-block">
+      <div id="report-container"></div>
+      <div class="view-all-row">
+        <a href="/src/reports/reports_index.html">View All Reports -></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fade-item" style="animation-delay:0.52s">
+    <div class="footer-social-bar">
+      <a href="https://github.com/nicolas4pitz" target="_blank" rel="noreferrer" class="footer-btn github">Github</a>
+      <a href="" target="_blank" rel="noreferrer" class="footer-btn crackme">XXXXX</a>
+    </div>
+  </footer>
+</main>
+
+<style>
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+  }
+
+  .hud-nav {
+    position: fixed;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 860px;
+    z-index: 100;
+    background: var(--bg);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.95);
+    padding: 14px 0 0;
+  }
+
+  .hud-nav-left {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+
+  .hud-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--pink);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, text-shadow 0.2s;
+    font-weight: bold;
+  }
+
+  .hud-link:hover {
+    border-color: var(--pink);
+    text-shadow: 0 0 8px var(--pink);
+  }
+
+  .divider {
+    border: none;
+    border-top: double 1px var(--pink);
+    opacity: 0.6;
+    margin: 0;
+  }
+
+  .page_header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 28px 0 0;
+    min-width: 0;
+  }
+
+  .page_header-copy {
+    min-width: 0;
+  }
+
+  .page_header h1 {
+    transform: translateZ(0);
+    font-family: var(--display);
+    font-size: 3rem;
+    color: var(--pink);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 18px var(--pink-glow);
+    line-height: 1.1;
+    margin: 0 0 10px;
+    white-space: nowrap;
+  }
+
+  .header_gif {
+    width: 195px;
+  }
+
+  .side-image{
+    width: 140px;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    right: -50px;
+    top: 210px;
+  }
+
+  .image-text{
+    width: 100px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+
+  .page_header h1 span {
+    display: block;
+    font-size: 1rem;
+    font-family: var(--mono);
+    letter-spacing: 0.2em;
+    color: var(--text);
+    opacity: 0.7;
+    margin-top: 4px;
+    text-shadow: none;
+    white-space: nowrap;
+  }
+
+  .status-bar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 860px;
+    z-index: 101;
+    padding: 3px 0;
+    background: var(--pink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-shadow: 1.5px 1.5px 0 #291e22;
+  }
+
+  #boot-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: var(--pink);
+    font-family: var(--mono);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+  }
+
+  #boot-overlay.hidden {
+    display: none;
+  }
+
+  .wired-call {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+  }
+
+  .wired-call a {
+    color: var(--pink);
+    text-decoration: none;
+    font-weight: bold;
+    opacity: 0.85;
+    text-shadow: 0 0 4px rgba(255, 152, 171, 0.6), 0 0 10px rgba(255, 152, 171, 0.35);
+  }
+
+  .wired-call a:hover {
+    opacity: 1;
+    text-shadow: 0 0 8px var(--pink);
+  }
+
+  .content-block {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .content-block p {
+    margin-bottom: 8px;
+  }
+
+  .content-block b,
+  .content-block strong {
+    color: var(--pink);
+  }
+
+  .content-block a {
+    color: var(--pink);
+  }
+
+  .intro-block {
+    margin-top: 18px;
+  }
+
+  .intro-quote {
+    text-align: left;
+  }
+
+  .intro-note {
+    text-align: right;
+  }
+
+  .audio-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+    color: var(--pink);
+    letter-spacing: 0.2em;
+  }
+
+  .audio-toggle-inline {
+    border: 1px dotted var(--pink);
+    color: var(--pink);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+
+  #audio-viz {
+    display: block;
+    background: transparent;
+    border-top: 3px double var(--pink);
+    border-bottom: 3px double var(--pink);
+    margin: 0 auto;
+  }
+
+  .wave-panel {
+    text-align: center;
+    margin-top: 18px;
+  }
+
+  .wave-text {
+    margin: 0;
+    color: var(--pink);
+    font-family: var(--mono);
+    font-style: italic;
+    font-size: 9px;
+    word-spacing: -2px;
+  }
+
+  .wave-text span {
+    display: inline-block;
+    animation: wave 2.4s ease-in-out infinite;
+  }
+
+  .section-shell {
+    animation: fadeIn 0.4s ease both;
+  }
+
+  .section_header {
+    padding: 4px 8px;
+    background: var(--pink);
+    color: #fff;
+    font-weight: bold;
+    font-size: 112%;
+    letter-spacing: 10px;
+    text-align: center;
+    text-shadow: 1.5px 1.5px 0 #291e22;
+    margin: 24px 0 12px;
+  }
+
+  .timeline-heatmap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin: 8px 0;
+  }
+
+  .score-strip {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-size: 0.7rem;
+    color: #777;
+  }
+
+  .view-all-row {
+    margin-top: 8px;
+  }
+
+  .project-item,
+  .report-item {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--pink-dim);
+    border-left: 2px solid var(--pink);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .project-item a,
+  .report-item a,
+  .view-all-row a {
+    color: var(--pink);
+    text-decoration: none;
+  }
+
+  .project-item a:hover,
+  .report-item a:hover,
+  .view-all-row a:hover {
+    text-decoration: underline;
+  }
+
+  .project-item small,
+  .report-item small {
+    opacity: 0.6;
+  }
+
+  .footer-social-bar {
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .footer-btn {
+    flex: 1;
+    padding: 6px 0;
+    text-align: center;
+    font-weight: bold;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 1.5px 1.5px 0 #291e22;
+  }
+
+  .footer-btn.github {
+    background: var(--pink);
+  }
+
+  .footer-btn.crackme {
+    background: var(--pink);
+  }
+
+  .footer-btn:hover {
+    background: var(--pink);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .noise {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    width: 200%;
+    height: 200vh;
+    background: transparent url('/src/assets/noise.png') repeat 0 0;
+    background-repeat: repeat;
+    animation: bg-animation 0.2s infinite;
+    visibility: visible;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes bg-animation {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-5%,-5%) }
+    20% { transform: translate(-10%,5%) }
+    30% { transform: translate(5%,-10%) }
+    40% { transform: translate(-5%,15%) }
+    50% { transform: translate(-10%,5%) }
+    60% { transform: translate(15%,0) }
+    70% { transform: translate(0,10%) }
+    80% { transform: translate(-15%,0) }
+    90% { transform: translate(10%,5%) }
+    100% { transform: translate(5%,0) }
+  }
+
+  @media (max-width: 600px) {
+    .wrap {
+      padding: 88px 16px 72px;
+    }
+
+    .page_header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .page_header h1 {
+      white-space: normal;
+      font-size: 2.5rem;
+    }
+
+    .page_header h1 span {
+      white-space: normal;
+    }
+
+    .footer-social-bar {
+      flex-wrap: wrap;
+    }
+
+    .footer-btn {
+      flex: 1 1 48%;
+    }
+  }
+</style>

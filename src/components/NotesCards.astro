@@ -1,0 +1,35 @@
+---
+
+import type { CollectionEntry } from 'astro:content';
+
+
+interface Props {
+  notes?: CollectionEntry<"notes">[]
+}
+
+const { notes } = Astro.props;
+
+let desc = false;
+
+function trocar(){
+  desc = !desc;
+}
+
+---
+
+{notes?.map(notes => (
+          <a href={`/notes/${notes.data.slug}`}>
+            <div class="card">
+                <div>
+                  <h3>{notes.data.title}</h3>
+                  <p class="description">{notes.data.description}</p>
+                </div>
+            </div>
+          </a>
+        ))}
+
+
+<style>
+
+
+</style>

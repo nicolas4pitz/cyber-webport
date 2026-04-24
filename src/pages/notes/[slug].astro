@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+// Esse aqui é para todas as rotas, para o astro fazer o mapeamento
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+
+  return notes.map((note) => ({
+    params: { slug: note.data.slug },
+    props: { note },
+  }));
+}
+
+interface Props {
+  note: CollectionEntry<"notes">;
+}
+
+//Mapeamento individual da nota, recebendo somente uma nota
+const { note } = Astro.props as Props;
+---
+
+<Layout>
+  <h1>{note.data.title}</h1>
+  <p>{note.data.description ?? "Sem descrição"}</p>
+</Layout>
+

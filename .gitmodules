@@ -1,0 +1,3 @@
+[submodule "src/data/projects"]
+	path = src/data/projects
+	url = https://github.com/nicolas4pitz/meus-projetos-md.git
