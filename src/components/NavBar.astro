@@ -1,0 +1,50 @@
+---
+import Divider from "./Divider.astro"
+---
+
+<header id="hud-nav" class="hud-nav">
+    <div class="hud-nav-left">
+      <a href="/" class="hud-link">HOME</a>
+      <a href="/about" class="hud-link">ABOUT</a>
+    </div>
+    <Divider />
+</header>
+
+
+<style>
+  .hud-nav {
+    position: fixed;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 860px;
+    z-index: 100;
+    background: var(--bg);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.95);
+    padding: 14px 0 0;
+  }
+
+  .hud-nav-left {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+
+  .hud-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--pink);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, text-shadow 0.2s;
+    font-weight: bold;
+  }
+
+  .hud-link:hover {
+    border-color: var(--pink);
+    text-shadow: 0 0 8px var(--pink);
+  }
+</style>

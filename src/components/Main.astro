@@ -6,7 +6,7 @@ const waveCharacters: string[] = Array.from(waveText);
 import { getCollection } from "astro:content";
 import NotesCards from "./NotesCards.astro";
 
-const notes = await getCollection("notes")
+const notes = await getCollection("notes");
 ---
 
 
@@ -15,13 +15,6 @@ const notes = await getCollection("notes")
 </div>
 
 <main class="wrap">
-  <header id="hud-nav" class="hud-nav">
-    <div class="hud-nav-left">
-      <a href="/" class="hud-link">HOME</a>
-      <a href="/about" class="hud-link">ABOUT</a>
-    </div>
-    <hr class="divider" />
-  </header>
 
   <section class="page_header">
     <img src="/src/assets/gengarsemtraco.gif" class="header_gif" alt="">

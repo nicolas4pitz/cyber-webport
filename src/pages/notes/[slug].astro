@@ -2,6 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Divider from "../../components/Divider.astro"
+
 
 // Esse aqui é para todas as rotas, para o astro fazer o mapeamento
 export async function getStaticPaths() {
@@ -22,7 +24,26 @@ const { note } = Astro.props as Props;
 ---
 
 <Layout>
-  <h1>{note.data.title}</h1>
-  <p>{note.data.description ?? "Sem descrição"}</p>
+  <div class="wrap">
+    <h1>{note.data.title}</h1>
+    <Divider />
+    <p>{note.data.description ?? "Sem descrição"}</p>
+    {note.data.content.map((content) => (
+      <p>{content}</p>
+    ))}
+  </div>
+  
 </Layout>
+
+<style>
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+  }
+
+</style>
 

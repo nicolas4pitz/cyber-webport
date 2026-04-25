@@ -5,31 +5,241 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   notes?: CollectionEntry<"notes">[]
+  itemsPerPage?: number;
 }
 
-const { notes } = Astro.props;
-
-let desc = false;
-
-function trocar(){
-  desc = !desc;
-}
+const { notes = [], itemsPerPage = 3 } = Astro.props;
+const totalPages = Math.ceil(notes.length / itemsPerPage);
 
 ---
 
-{notes?.map(notes => (
-          <a href={`/notes/${notes.data.slug}`}>
-            <div class="card">
-                <div>
-                  <h3>{notes.data.title}</h3>
-                  <p class="description">{notes.data.description}</p>
-                </div>
-            </div>
-          </a>
-        ))}
+
+<div class="notes-container" data-items-per-page={itemsPerPage} data-total-pages={totalPages}>
+  {notes?.map((note, index) => (
+    <a href={`/notes/${note.data.slug}`} class="note-link" data-index={index}>
+      <div class="note-card">
+        <div class="note-header">
+          <h3 class="note-title">{note.data.title}</h3>
+          <span class="note-type">{note.data.IsIt}</span>
+        </div>
+        <div class="note-footer">
+          <p class="note-description">{note.data.description}</p>
+          <span class="note-link-indicator">→</span>
+        </div>
+      </div>
+    </a>
+  ))}
+</div>
+
+{totalPages > 1 && (
+  <div class="pagination" id="pagination">
+    <button class="pagination-btn pagination-prev" id="prev-btn">← Previous</button>
+    <span class="page-info"><span id="current-page">1</span> / {totalPages}</span>
+    <button class="pagination-btn pagination-next" id="next-btn">Next →</button>
+  </div>
+)}
+
+<script>
+  const container = document.querySelector('.notes-container');
+  if (!container) throw new Error('Container não encontrado');
+  
+  const itemsPerPage = parseInt(container.dataset.itemsPerPage || '5', 10);
+  const totalPages = parseInt(container.dataset.totalPages || '1', 10);
+  const noteLinks = container.querySelectorAll('.note-link');
+  
+  let currentPage = 1;
+  
+  function showPage(page: number) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    
+    noteLinks.forEach((link, index) => {
+      link.style.display = (index >= start && index < end) ? 'block' : 'none';
+    });
+    
+    // Atualizar página atual
+    currentPage = page;
+    const currentPageSpan = document.getElementById('current-page');
+    if (currentPageSpan) currentPageSpan.textContent = String(page);
+    
+    // Atualizar estado dos botões
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    if (prevBtn) prevBtn.disabled = page === 1;
+    if (nextBtn) nextBtn.disabled = page === totalPages;
+  }
+  
+  // Event listeners dos botões
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentPage > 1) showPage(currentPage - 1);
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentPage < totalPages) showPage(currentPage + 1);
+    });
+  }
+  
+  // Mostrar primeira página
+  showPage(1);
+</script>
+
+
+
+
 
 
 <style>
 
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.note-link {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.note-card {
+  border: 1px solid var(--pink-dim);
+  background: linear-gradient(135deg, rgba(164, 94, 255, 0.02) 0%, rgba(0, 0, 0, 0.1) 100%);
+  padding: 8px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.note-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(164, 94, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.note-link:hover .note-card {
+  border-color: var(--pink);
+  background: linear-gradient(135deg, rgba(164, 94, 255, 0.08) 0%, rgba(164, 94, 255, 0.02) 100%);
+  box-shadow: 0 0 12px rgba(164, 94, 255, 0.4), inset 0 0 12px rgba(164, 94, 255, 0.1);
+  
+}
+
+.note-card:hover::before {
+  opacity: 1;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.note-title {
+  color: var(--pink);
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  font-family: var(--mono);
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.note-type {
+  color: var(--text);
+  opacity: 0.6;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.note-description {
+  color: var(--text);
+  margin: 0px;
+  font-size: 11px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.note-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.note-link-indicator {
+  color: var(--pink);
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.note-link:hover .note-link-indicator {
+  opacity: 1;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--pink-dim);
+}
+
+.page-info {
+  color: var(--text);
+  font-size: 12px;
+  opacity: 0.7;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+
+.pagination-btn {
+  padding: 8px 14px;
+  background: none;
+  border: none;
+  color: var(--pink);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--pink);
+  text-shadow: 0 0 4px var(--pink);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--pink-dim);
+}
 
 </style>

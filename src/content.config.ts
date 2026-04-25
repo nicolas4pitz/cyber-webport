@@ -77,6 +77,7 @@ const notes = defineCollection({
     description: z.string().optional(),
     slug: z.string(),
     IsIt: z.string(),
+    content: z.array(z.string())
   })
 });
 
