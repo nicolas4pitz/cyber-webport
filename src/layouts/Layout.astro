@@ -13,7 +13,7 @@ const { title = 'nicolas4pitz[Home]' } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="wrap">
+	<body>
     <div class="noise" aria-hidden="true"></div>
     <div id="status-bar" class="status-bar">Loading status...</div>
 
@@ -37,14 +37,6 @@ const { title = 'nicolas4pitz[Home]' } = Astro.props;
 
   html {
     background: #000000;
-  }
-
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 90px 20px 80px;
   }
 
   html,
