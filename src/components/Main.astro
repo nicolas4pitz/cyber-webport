@@ -2,11 +2,18 @@
 const waveText = 'The Wired is just a medium of communication and the transfer of information';
 const waveCharacters: string[] = Array.from(waveText);
 
-
 import { getCollection } from "astro:content";
 import NotesCards from "./NotesCards.astro";
+import ProjectCards from "./ProjectCards.astro";
+import CTFResults from "./CTFResults.astro";
+import ReportsCards from "./ReportsCards.astro";
 
 const notes = await getCollection("notes");
+const projects = await getCollection("blog");
+
+// Importar dados JSON
+import ctfResultsData from "../data/ctf_results.json";
+import reportsData from "../data/reports.json";
 ---
 
 
@@ -77,9 +84,11 @@ const notes = await getCollection("notes");
   <section class="section-shell fade-item" style="animation-delay:0.32s">
     <div class="section_header">Projects</div>
     <div class="content-block">
-      <div id="project-container"></div>
+      <div id="project-container">
+        <ProjectCards projects={projects}/>
+      </div>
       <div class="view-all-row">
-        <a href="/src/projects/projects_index.html">View All Projects -></a>
+        <a href="/projects">View All Projects -></a>
       </div>
     </div>
   </section>
@@ -87,17 +96,26 @@ const notes = await getCollection("notes");
   <section class="section-shell fade-item" style="animation-delay:0.37s">
     <div class="section_header">CTF Results</div>
     <div class="content-block">
-      <div id="ctf-score-strip" class="score-strip"></div>
-      <div id="ctf-container"></div>
+      <div id="ctf-container">
+        <CTFResults ctfResults={ctfResultsData} itemsPerPage={10}/>
+      </div>
+      <div class="view-all-row">
+        <a href="/ctf">View All CTF Results -></a>
+      </div>
     </div>
   </section>
 
   <section class="section-shell fade-item" style="animation-delay:0.42s">
     <div class="section_header">Reports & Write-Ups</div>
     <div class="content-block">
-      <div id="report-container"></div>
+      <div id="report-container">
+        <ReportsCards reports={reportsData}/>
+      </div>
       <div class="view-all-row">
-        <a href="/src/reports/reports_index.html">View All Reports -></a>
+        <a href="/reports">View All Reports -></a>
+      </div>
+    </div>
+  </section>
       </div>
     </div>
   </section>

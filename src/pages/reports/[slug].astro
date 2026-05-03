@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import reportsData from '../../data/reports.json';
+
+export function getStaticPaths() {
+  return reportsData.map(report => ({
+    params: { slug: report.slug },
+    props: { report },
+  }));
+}
+
+interface Props {
+  report: any;
+}
+
+const { report } = Astro.props as Props;
+---
+
+<Layout>
+  <main class="wrap report-detail">
+    <a href="/" class="back-link">← Back</a>
+    
+    <article>
+      <header class="report-header">
+        <h1>{report.title}</h1>
+        <div class="report-meta">
+          <span class="type">{report.type}</span>
+        </div>
+      </header>
+
+      <div class="report-content">
+        <p>{report.description}</p>
+        
+        <section class="report-section">
+          <h2>Overview</h2>
+          <p>This is a detailed report or write-up about {report.title.toLowerCase()}.</p>
+        </section>
+
+        <section class="report-section">
+          <h2>Key Findings</h2>
+          <ul>
+            <li>Finding 1: Description of key finding</li>
+            <li>Finding 2: Description of key finding</li>
+            <li>Finding 3: Description of key finding</li>
+          </ul>
+        </section>
+
+        <section class="report-section">
+          <h2>Methodology</h2>
+          <p>Description of the methodology used in this assessment or write-up.</p>
+        </section>
+
+        <section class="report-section">
+          <h2>Recommendations</h2>
+          <ul>
+            <li>Recommendation 1: Actions to take</li>
+            <li>Recommendation 2: Actions to take</li>
+            <li>Recommendation 3: Actions to take</li>
+          </ul>
+        </section>
+
+        <section class="report-section">
+          <h2>Conclusion</h2>
+          <p>Summary and conclusion of the report or write-up.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    margin-left: 0.5rem;
+  }
+
+  .report-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+  }
+
+  .report-header h1 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+  }
+
+  .report-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .report-content {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .report-section {
+    margin: 2rem 0;
+  }
+
+  .report-content p {
+    margin: 1rem 0;
+  }
+
+  .report-content h2 {
+    margin: 1.5rem 0 0.75rem 0;
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .report-content h3 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .report-content ul,
+  .report-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+  }
+
+  .report-content li {
+    margin: 0.5rem 0;
+  }
+
+  .report-content code {
+    background-color: var(--hover-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  .report-content pre {
+    background-color: var(--hover-color);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+</style>

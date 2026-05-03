@@ -1,0 +1,38 @@
+[
+  {
+    "title": "HackTheBox Write-Up: Machine Name",
+    "slug": "htb-machine-writeup",
+    "type": "Write-Up",
+    "description": "Complete walkthrough of a HackTheBox machine including enumeration, exploitation and privilege escalation"
+  },
+  {
+    "title": "TryHackMe Security Report",
+    "slug": "thm-report",
+    "type": "Report",
+    "description": "Detailed security assessment report with findings and recommendations"
+  },
+  {
+    "title": "Penetration Test Report - Company X",
+    "slug": "pentest-report-company",
+    "type": "Report",
+    "description": "Professional penetration testing report with vulnerabilities and remediation steps"
+  },
+  {
+    "title": "Vulnerability Analysis Write-Up",
+    "slug": "vuln-analysis-writeup",
+    "type": "Write-Up",
+    "description": "In-depth analysis of discovered vulnerabilities and exploitation techniques"
+  },
+  {
+    "title": "Red Team Exercise Report",
+    "slug": "redteam-exercise",
+    "type": "Report",
+    "description": "Summary of red team simulation exercise with tactics and techniques used"
+  },
+  {
+    "title": "Security Assessment - Web Application",
+    "slug": "webapp-assessment",
+    "type": "Report",
+    "description": "Comprehensive security assessment of web application with OWASP Top 10 findings"
+  }
+]

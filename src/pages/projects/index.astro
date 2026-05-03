@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectCards from '../../components/ProjectCards.astro';
+
+const projects = await getCollection('blog');
+---
+
+<Layout>
+  <main class="wrap projects-index">
+    <a href="/" class="back-link">← Back</a>
+    
+    <h1>All Projects</h1>
+    
+    <div class="projects-list">
+      <ProjectCards projects={projects}/>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    margin-left: 0.5rem;
+  }
+
+  .projects-index h1 {
+    margin: 0 0 2rem 0;
+    font-size: 2rem;
+  }
+
+  .projects-list {
+    margin-top: 1.5rem;
+  }
+</style>

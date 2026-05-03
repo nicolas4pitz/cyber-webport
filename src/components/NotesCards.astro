@@ -112,7 +112,7 @@ const totalPages = Math.ceil(notes.length / itemsPerPage);
 }
 
 .note-card {
-  border: 1px solid var(--pink-dim);
+  
   background: linear-gradient(135deg, rgba(164, 94, 255, 0.02) 0%, rgba(0, 0, 0, 0.1) 100%);
   padding: 8px;
   font-size: 12px;
@@ -131,12 +131,6 @@ const totalPages = Math.ceil(notes.length / itemsPerPage);
   pointer-events: none;
 }
 
-.note-link:hover .note-card {
-  border-color: var(--pink);
-  background: linear-gradient(135deg, rgba(164, 94, 255, 0.08) 0%, rgba(164, 94, 255, 0.02) 100%);
-  box-shadow: 0 0 12px rgba(164, 94, 255, 0.4), inset 0 0 12px rgba(164, 94, 255, 0.1);
-  
-}
 
 .note-card:hover::before {
   opacity: 1;

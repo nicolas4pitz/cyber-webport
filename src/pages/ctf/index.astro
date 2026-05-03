@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTFResults from '../../components/CTFResults.astro';
+import ctfResultsData from '../../data/ctf_results.json';
+---
+
+<Layout>
+  <main class="wrap ctf-index">
+    <a href="/" class="back-link">← Back</a>
+    
+    <h1>CTF Results</h1>
+    
+    <div class="ctf-list">
+      <CTFResults ctfResults={ctfResultsData} itemsPerPage={15}/>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    margin-left: 0.5rem;
+  }
+
+  .ctf-index h1 {
+    margin: 0 0 2rem 0;
+    font-size: 2rem;
+  }
+
+  .ctf-list {
+    margin-top: 1.5rem;
+  }
+</style>
