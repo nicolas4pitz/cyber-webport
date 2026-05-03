@@ -6,12 +6,11 @@ import reportsData from '../../data/reports.json';
 
 <Layout>
   <main class="wrap reports-index">
-    <a href="/" class="back-link">← Back</a>
     
     <h1>All Reports & Write-Ups</h1>
     
     <div class="reports-list">
-      <ReportsCards reports={reportsData}/>
+      <ReportsCards reports={reportsData} max={reportsData.length}/>
     </div>
   </main>
 </Layout>

@@ -6,12 +6,11 @@ import ctfResultsData from '../../data/ctf_results.json';
 
 <Layout>
   <main class="wrap ctf-index">
-    <a href="/" class="back-link">← Back</a>
     
     <h1>CTF Results</h1>
     
     <div class="ctf-list">
-      <CTFResults ctfResults={ctfResultsData} itemsPerPage={15}/>
+      <CTFResults ctfResults={ctfResultsData} itemsPerPage={15} max={ctfResultsData.length}/>
     </div>
   </main>
 </Layout>
