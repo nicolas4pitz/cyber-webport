@@ -13,7 +13,7 @@ const projects = await getCollection("blog");
 
 // Importar dados JSON
 import ctfResultsData from "../data/ctf_results.json";
-import reportsData from "../data/reports.json";
+import reportsData from "../data/writeups.json";
 ---
 
 
@@ -112,7 +112,7 @@ import reportsData from "../data/reports.json";
         <ReportsCards reports={reportsData}/>
       </div>
       <div class="view-all-row">
-        <a href="/reports">View All Reports -></a>
+        <a href="/writeups">View All Reports -></a>
       </div>
     </div>
   </section>

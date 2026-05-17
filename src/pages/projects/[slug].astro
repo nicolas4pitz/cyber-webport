@@ -1,6 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { render } from 'astro:content';
 
 export async function getStaticPaths() {
   const projects = await getCollection('blog');
@@ -11,11 +12,12 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  project: any;
+  project: CollectionEntry<"blog">;
 }
 
-const { project } = Astro.props as Props;
-const { Content } = await project.render();
+const { project } = Astro.props;
+
+const { Content } = await render(project);
 ---
 
 <Layout>
@@ -67,12 +69,11 @@ const { Content } = await project.render();
     display: inline-block;
     margin-bottom: 2rem;
     text-decoration: none;
-    color: var(--accent-color);
-    transition: all 0.3s ease;
+    color: var(--text);
   }
 
   .back-link:hover {
-    margin-left: 0.5rem;
+    color: var(--pink-dim);
   }
 
   .project-header {
@@ -84,6 +85,7 @@ const { Content } = await project.render();
   .project-header h1 {
     margin: 0 0 1rem 0;
     font-size: 2rem;
+    color: var(--pink);
   }
 
   .project-meta {
@@ -118,20 +120,19 @@ const { Content } = await project.render();
   .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
-    border: 1px solid var(--accent-color);
     border-radius: 4px;
     text-decoration: none;
-    color: var(--accent-color);
+    color: var(--pink);
     transition: all 0.3s ease;
   }
 
   .btn:hover {
-    background-color: var(--accent-color);
-    color: var(--bg);
+    color: var(--pink-dim);
   }
 
   .project-content {
     font-size: 1rem;
+    color: var(--text);
     line-height: 1.6;
   }
 

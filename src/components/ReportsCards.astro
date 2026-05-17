@@ -16,7 +16,7 @@ const { reports = [], max = 2 } = Astro.props;
 
 <div class="reports-container">
   {reports?.slice(0, max).map((report) => (
-    <a href={`/reports/${report.slug}`} class="report-link">
+    <a href={`/writeups/${report.slug}`} class="report-link">
       <div class="report-card">
         <div class="report-header">
           <h3 class="report-title">{report.title}</h3>

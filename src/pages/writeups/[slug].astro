@@ -1,19 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import reportsData from '../../data/reports.json';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 
-export function getStaticPaths() {
-  return reportsData.map(report => ({
-    params: { slug: report.slug },
-    props: { report },
+export async function getStaticPaths() {
+  const projects = await getCollection('writeups');
+  return projects.map(project => ({
+    params: { slug: project.data.slug },
+    props: { project },
   }));
 }
 
 interface Props {
-  report: any;
+  project: CollectionEntry<"writeups">;
 }
 
-const { report } = Astro.props as Props;
+const { project } = Astro.props;
+
+const { Content } = await render(project);
 ---
 
 <Layout>
@@ -22,47 +27,14 @@ const { report } = Astro.props as Props;
     
     <article>
       <header class="report-header">
-        <h1>{report.title}</h1>
+        <h1>{project.data.title}</h1>
         <div class="report-meta">
-          <span class="type">{report.type}</span>
+          <span class="type">{project.data.description}</span>
         </div>
       </header>
 
       <div class="report-content">
-        <p>{report.description}</p>
-        
-        <section class="report-section">
-          <h2>Overview</h2>
-          <p>This is a detailed report or write-up about {report.title.toLowerCase()}.</p>
-        </section>
-
-        <section class="report-section">
-          <h2>Key Findings</h2>
-          <ul>
-            <li>Finding 1: Description of key finding</li>
-            <li>Finding 2: Description of key finding</li>
-            <li>Finding 3: Description of key finding</li>
-          </ul>
-        </section>
-
-        <section class="report-section">
-          <h2>Methodology</h2>
-          <p>Description of the methodology used in this assessment or write-up.</p>
-        </section>
-
-        <section class="report-section">
-          <h2>Recommendations</h2>
-          <ul>
-            <li>Recommendation 1: Actions to take</li>
-            <li>Recommendation 2: Actions to take</li>
-            <li>Recommendation 3: Actions to take</li>
-          </ul>
-        </section>
-
-        <section class="report-section">
-          <h2>Conclusion</h2>
-          <p>Summary and conclusion of the report or write-up.</p>
-        </section>
+        <Content />
       </div>
     </article>
   </main>
@@ -98,6 +70,7 @@ const { report } = Astro.props as Props;
   .report-header h1 {
     margin: 0 0 1rem 0;
     font-size: 2rem;
+    color: var(--pink);
   }
 
   .report-meta {
@@ -120,6 +93,8 @@ const { report } = Astro.props as Props;
   .report-content {
     font-size: 1rem;
     line-height: 1.6;
+    color: var(--text);
+    max-width: 860px;
   }
 
   .report-section {
@@ -166,5 +141,28 @@ const { report } = Astro.props as Props;
     border-radius: 4px;
     overflow-x: auto;
     margin: 1rem 0;
+  }
+
+  /* Aplicar estilos no markdown */
+  :global(.report-content) {
+
+    p {
+      font-family: var(--mono);
+      background-color: rgba(0, 0, 0, 0.452);
+      
+    }
+
+  
+    p::before{
+      content: ">";
+    }
+
+    img{
+      max-width: 100% !important;
+      width: auto !important;
+      margin: 1.5rem 0 !important;
+    }
+
+
   }
 </style>
