@@ -7,6 +7,9 @@ import NotesCards from "./NotesCards.astro";
 import ProjectCards from "./ProjectCards.astro";
 import CTFResults from "./CTFResults.astro";
 import ReportsCards from "./ReportsCards.astro";
+import gengarHeader from "../assets/gengarsemtraco.gif";
+import gengarSide from "../assets/gengarpisao.gif";
+import gastlyImage from "../assets/gastlyy.gif";
 
 const notes = await getCollection("notes");
 const projects = await getCollection("blog");
@@ -24,7 +27,7 @@ import reportsData from "../data/writeups.json";
 <main class="wrap">
 
   <section class="page_header">
-    <img src="/src/assets/gengarsemtraco.gif" class="header_gif" alt="gengar">
+    <img src={gengarHeader.src} class="header_gif" alt="gengar">
     <div class="page_header-copy">
       
       <h1>
@@ -49,7 +52,7 @@ import reportsData from "../data/writeups.json";
     <p class="intro-note">I learn by doing: <i><b>labs, CTFs, and write-ups</b></i></p>
   </section>
 
-  <img class="side-image" src="/src/assets/gengarpisao.gif" alt="outro gengar">
+  <img class="side-image" src={gengarSide.src} alt="outro gengar">
 
   <section class="audio-panel fade-item" style="animation-delay:0.12s">
     <div class="audio-bar">
@@ -61,7 +64,7 @@ import reportsData from "../data/writeups.json";
   </section>
 
   <section class="wave-panel">
-    <img src="/src/assets/gastlyy.gif" alt="gastly" class="image-text">
+    <img src={gastlyImage.src} alt="gastly" class="image-text">
     <p class="wave-text" id="wt" aria-label={waveText}>
       {waveCharacters.map((character: string, index: number) => (
         <span style={`animation-delay:${index * 0.05}s`}>
