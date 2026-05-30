@@ -15,6 +15,3 @@ machineURL: ""
 
 # Mario
 
-MARIROEROEWIROW
-
-Testete testual para ver se é bom para leitura, pois acredito não sei muito bom, macarraão é ruim
